@@ -6,7 +6,9 @@ const router = express.Router();
 const { listContacts } = require('../../models/contacts');
 
 router.get('/', async (req, res, next) => {
-  listContacts();
+  const data = await listContacts();
+  res.send(data);
+  next();
 });
 
 router.get('/:contactId', async (req, res, next) => {
