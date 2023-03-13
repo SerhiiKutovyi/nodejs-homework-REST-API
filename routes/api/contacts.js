@@ -5,6 +5,7 @@ const {
   getContactById,
   addContact,
   removeContact,
+  updateContact,
 } = require('../../models/contacts');
 
 router.get('/', async (req, res, next) => {
@@ -20,15 +21,15 @@ router.get('/:id', async (req, res, next) => {
   try {
     const data = await getContactById(req.params.id);
     if (!data) {
-      res.status(404).json({
-        message: 'Not found',
-      });
-      return;
+      const error = new Error('Not found');
+      error.status = 404;
+      throw error;
     }
-    res.send(data);
+    res.json(data);
   } catch (error) {
-    res.status(500).json({
-      message: 'Server error',
+    const { status = 500, message = 'Server error' } = error;
+    res.status(status).json({
+      message,
     });
   }
 });
@@ -73,6 +74,14 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 router.put('/:id', async (req, res, next) => {
+  try {
+    const data = await updateContact(req.params.id);
+    console.log('data', data);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server error',
+    });
+  }
   res.json({ message: 'template message' });
 });
 

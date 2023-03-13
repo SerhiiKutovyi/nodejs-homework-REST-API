@@ -39,7 +39,11 @@ const addContact = async ({ name, email, phone }) => {
   return newContact;
 };
 
-const updateContact = async (id, body) => {};
+const updateContact = async (id, body) => {
+  const contacts = await listContacts();
+  const update = contacts.filter(ele => ele.id === id);
+  console.log('Up =======>', update);
+};
 
 module.exports = {
   listContacts,
