@@ -1,4 +1,4 @@
-const { addContact } = require('../../models/contacts');
+const Contact = require('../../models/contacts');
 
 const { HttpError } = require('../../helpers');
 const addSchema = require('../../schemas/contacts');
@@ -10,7 +10,7 @@ const addNewContact = async (req, res, next) => {
       throw HttpError(400, 'missing required name field');
     }
     const { name, email, phone } = req.body;
-    const data = await addContact({ name, email, phone });
+    const data = await Contact.create({ name, email, phone });
     res.status(201).json(data);
   } catch (error) {
     next(error);
