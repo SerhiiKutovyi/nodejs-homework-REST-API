@@ -44,3 +44,5 @@ module.exports = {
   addSchema,
   updateFavoriteSchema,
 };
+
+// test
