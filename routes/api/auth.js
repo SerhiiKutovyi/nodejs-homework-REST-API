@@ -1,7 +1,11 @@
-const express = require('express');
+const router = require('express').Router();
 
-const router = express.Router();
+// const { isValidId } = require('../../middlewares');
 
-router.post('/signup');
+const ctrl = require('../../controllers/auth');
+
+router.post('/register', ctrl.register);
+
+router.post('/login', ctrl.login);
 
 module.exports = router;
