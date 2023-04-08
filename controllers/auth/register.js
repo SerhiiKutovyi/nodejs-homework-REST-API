@@ -20,8 +20,13 @@ const register = async (req, res) => {
     token,
   });
   res.status(201).json({
-    email: newUser.email,
-    password: newUser.password,
+    Status: '201 Created',
+    ResponseBody: {
+      user: {
+        email: newUser.email,
+        subscription: newUser.subscription,
+      },
+    },
   });
 };
 

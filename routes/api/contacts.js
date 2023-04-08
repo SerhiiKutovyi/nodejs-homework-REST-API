@@ -7,20 +7,25 @@ const { schemas } = require('../../models/contact');
 const { ctrlWrapper } = require('../../helpers');
 const ctrl = require('../../controllers/contacts');
 
-router.get('/', authenticate, ctrlWrapper(ctrl.getAllContacts));
+router.get('/', ctrlWrapper(authenticate), ctrlWrapper(ctrl.getAllContacts));
 
-router.get('/:id', authenticate, isValidId, ctrlWrapper(ctrl.getById));
+router.get(
+  '/:id',
+  ctrlWrapper(authenticate),
+  isValidId,
+  ctrlWrapper(ctrl.getById)
+);
 
 router.post(
   '/',
-  authenticate,
+  ctrlWrapper(authenticate),
   validateBody(schemas.addSchema),
   ctrlWrapper(ctrl.addNewContact)
 );
 
 router.put(
   '/:id',
-  authenticate,
+  ctrlWrapper(authenticate),
   validateBody(schemas.addSchema),
   isValidId,
   ctrlWrapper(ctrl.updateById)
@@ -28,12 +33,17 @@ router.put(
 
 router.patch(
   '/:id/favorite',
-  authenticate,
+  ctrlWrapper(authenticate),
   validateBody(schemas.updateFavoriteSchema),
   isValidId,
   ctrlWrapper(ctrl.updateFavorite)
 );
 
-router.delete('/:id', authenticate, isValidId, ctrlWrapper(ctrl.removeById));
+router.delete(
+  '/:id',
+  ctrlWrapper(authenticate),
+  isValidId,
+  ctrlWrapper(ctrl.removeById)
+);
 
 module.exports = router;
