@@ -1,13 +1,10 @@
 const bcrypt = require('bcryptjs');
-const { User, schemas } = require('../../models/user');
+
+const { User } = require('../../models/user');
+
 const { HttpError } = require('../../helpers');
 
 const register = async (req, res) => {
-  const { error } = schemas.registerSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, 'missing required email field');
-  }
-
   const { email, password, subscription, token } = req.body;
   const userEmail = await User.findOne({ email });
   if (userEmail) {

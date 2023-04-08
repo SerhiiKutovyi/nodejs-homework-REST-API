@@ -2,18 +2,13 @@ const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 
-const { User, schemas } = require('../../models/user');
+const { User } = require('../../models/user');
 
 const { HttpError } = require('../../helpers');
 
 const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
-  const { error } = schemas.loginSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, 'missing required login field');
-  }
-
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
