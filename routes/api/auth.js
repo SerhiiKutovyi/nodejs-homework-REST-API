@@ -4,7 +4,7 @@ const router = express.Router();
 const { ctrlWrapper } = require('../../helpers');
 const ctrl = require('../../controllers/auth');
 
-const { validateBody, authenticate } = require('../../middlewares');
+const { validateBody, authenticate, upload } = require('../../middlewares');
 const { schemas } = require('../../models/user');
 
 router.post(
@@ -22,5 +22,12 @@ router.post(
 router.get('/current', ctrlWrapper(authenticate), ctrlWrapper(ctrl.getCurrent));
 
 router.get('/logout', ctrlWrapper(authenticate), ctrlWrapper(ctrl.getLogout));
+
+router.patch(
+  '/avatars ',
+  authenticate,
+  upload.single('avatar'),
+  ctrlWrapper(ctrl.updateAvatar)
+);
 
 module.exports = router;
