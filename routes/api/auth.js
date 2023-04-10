@@ -25,7 +25,7 @@ router.get('/logout', ctrlWrapper(authenticate), ctrlWrapper(ctrl.getLogout));
 
 router.patch(
   '/avatars ',
-  authenticate,
+  ctrlWrapper(authenticate),
   upload.single('avatar'),
   ctrlWrapper(ctrl.updateAvatar)
 );
