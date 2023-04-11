@@ -16,6 +16,12 @@ router.post(
 router.get('/verify/:verificationCode', ctrlWrapper(ctrl.verify));
 
 router.post(
+  '/verify',
+  validateBody(schemas.verifySchema),
+  ctrlWrapper(ctrl.resendEmail)
+);
+
+router.post(
   '/login',
   validateBody(schemas.loginSchema),
   ctrlWrapper(ctrl.login)

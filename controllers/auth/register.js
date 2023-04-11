@@ -8,7 +8,7 @@ const { HttpError, sendEmail } = require('../../helpers');
 
 const { BASE_URL } = process.env;
 
-const { uuid } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const register = async (req, res) => {
   const { email, password, subscription, token } = req.body;
@@ -19,20 +19,22 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
-  const verificationCode = uuid();
+  const verificationToken = uuidv4();
+
   const newUser = await User.create({
     email,
     password: hashPassword,
     subscription,
     token,
     avatarURL,
-    verificationCode,
+    verificationToken,
   });
 
   const mail = {
     to: email,
     subject: 'Verify email',
-    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationCode}">Click to verify</a>`,
+    text: 'Verify your email',
+    html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click to verify</a>`,
   };
 
   await sendEmail(mail);
