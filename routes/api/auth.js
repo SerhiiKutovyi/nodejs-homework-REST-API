@@ -13,6 +13,8 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
+router.get('/verify/:verificationCode', ctrlWrapper(ctrl.verify));
+
 router.post(
   '/login',
   validateBody(schemas.loginSchema),
