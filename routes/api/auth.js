@@ -13,7 +13,7 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
-router.get('/verify/:verificationCode', ctrlWrapper(ctrl.verify));
+router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verify));
 
 router.post(
   '/verify',
